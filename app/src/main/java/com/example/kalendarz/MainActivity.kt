@@ -1,7 +1,6 @@
 package com.example.kalendarz
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -9,12 +8,10 @@ import android.widget.CalendarView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.alpha
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
-import kotlin.math.absoluteValue
+
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
