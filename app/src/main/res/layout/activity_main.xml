@@ -6,75 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/koniecWyj"
+    <TextView
+        android:id="@+id/DataRozp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Potwierdź datę wyjazdu"
+        android:text="Data rozpoczęcia wyjazdu"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.723" />
-
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.516" />
 
     <Button
-        android:id="@+id/poczatekWyj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Podwierdź datę przyjazdu"
+        android:id="@+id/PrzyciskK"
+        android:layout_width="223dp"
+        android:layout_height="64dp"
+        android:text="Wybierz zakres swojego wyjazdu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
+        app:layout_constraintVertical_bias="0.353" />
 
     <TextView
-        android:id="@+id/poczatekOut"
+        android:id="@+id/DataKonc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Data przyjazdu"
+        android:text="Data końca wyjazdu"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintVertical_bias="0.602" />
 
     <TextView
-        android:id="@+id/dlgOut"
+        android:id="@+id/DlgOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Długość wyjazdu"
+        android:text="Długość twojego wyjazdu"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.897" />
-
-    <TextView
-        android:id="@+id/koniecOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data wyjazdu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.782" />
+        app:layout_constraintVertical_bias="0.691" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

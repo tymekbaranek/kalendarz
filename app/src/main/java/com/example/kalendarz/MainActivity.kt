@@ -4,15 +4,17 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
-import android.widget.CalendarView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import java.time.LocalDate
-import java.time.ZoneId
 import java.util.*
+import java.util.Calendar
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
 
-
+//Tymoteusz Baranowski
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -20,57 +22,48 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val kalendarz = findViewById<CalendarView>(R.id.calendarView)
-        val poczatek = findViewById<Button>(R.id.poczatekWyj)
-        val koniec = findViewById<Button>(R.id.koniecWyj)
-        val poczOut = findViewById<TextView>(R.id.poczatekOut)
-        val konOut = findViewById<TextView>(R.id.koniecOut)
-        val dlugosc = findViewById<TextView>(R.id.dlgOut)
+        val PrzyciskK = findViewById<Button>(R.id.PrzyciskK)
+        val DataRozp = findViewById<TextView>(R.id.DataRozp)
+        val DataKonc = findViewById<TextView>(R.id.DataKonc)
+        val DlgOut = findViewById<TextView>(R.id.DlgOut)
+        val Kalendarz=Calendar.getInstance()
+        val DataMin= Kalendarz.timeInMillis
+        val DataMax= Kalendarz.timeInMillis + 63113904000
+        val Limit= CalendarConstraints.Builder()
+            .setValidator(DateValidatorPointForward.now())
+            .setStart(DataMin)
+            .setEnd(DataMax)
+            .build()
 
-        kalendarz.minDate = System.currentTimeMillis()
-        kalendarz.maxDate = LocalDate.now().plusYears(2).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-        kalendarz.setFirstDayOfWeek(Calendar.MONDAY)
+        PrzyciskK.setOnClickListener {
+            var StartDate : Long=1
+            var EndDate : Long=1
+            val calendar = MaterialDatePicker.Builder.dateRangePicker()
+                .setCalendarConstraints(Limit)
+                .setTitleText("Wybierz date wyjazdu i przyjazdu")
+                .build()
+            calendar.show(supportFragmentManager, "Kalendarz")
+            calendar.addOnPositiveButtonClickListener { datePicked->
+                StartDate = datePicked.first
+                EndDate = datePicked.second
+                DataRozp.text="Data twojego wyjazdu to: "+ConvertDate(StartDate)
+                DataKonc.text="Data twojego przyjazdu to: "+ConvertDate(EndDate)
 
-        val dataPocz = mutableListOf<Int>(0,0,0)
-        val dataKon = mutableListOf<Int>(0,0,0)
-        val date = arrayListOf<Int>(0,0,0)
-
-        kalendarz.setOnDateChangeListener(){CalendarView, d, m, r ->
-            date[0] = d
-            date[1] = m +1
-            date[2] = r
+                val StartDateSub = StartDate/1000/60/60/24
+                val EndDateSub = EndDate/1000/60/60/24
+                val DatesSub = (EndDateSub-StartDateSub).toInt()
+                if(DatesSub==1)
+                    DlgOut.text="Twój wyjazd będzie trwał " + DatesSub.toString() + " dzień"
+                else
+                    DlgOut.text = "Twój wyjazd będzie trwał " + DatesSub.toString() + " dni"
+            }
         }
-
-        poczatek.setOnClickListener {
-            dataPocz[0] = date[0]
-            dataPocz[1] = date[1]
-            dataPocz[2] = date[2]
-            poczOut.text = "Początek wyjazdu: " +date[0].toString()+"-"+date[1].toString()+"-"+date[2].toString()
-
-            if(dataPocz[0] != 0 && dataKon[0] != 0)
-                if(dataPocz[0] > dataKon[0] || dataPocz[2] > dataKon[2] && dataPocz[1] == dataKon[1])
-                    dlugosc.text = "Koniec wyjazdu nie może być wcześniej niż początek"
-                else{
-                    val temp1 = (dataKon[0]*360) + (dataKon[1]*30) + dataKon[2]
-                    val temp2 = (dataPocz[0]*360) + (dataPocz[1]*30) + dataPocz[2]
-                    val temp = temp1.toChar() - temp2.toChar()
-                    dlugosc.text = "Wyjazd trwa "+temp.toString()+" dni"}
-
-        }
-        koniec.setOnClickListener {
-            dataKon[0] = date[0]
-            dataKon[1] = date[1]
-            dataKon[2] = date[2]
-            konOut.text = "Koniec wyjazdu: " +date[0].toString()+"-"+date[1].toString()+"-"+date[2].toString()
-
-            if(dataPocz[0] != 0 && dataKon[0] != 0)
-                if(dataPocz[0] > dataKon[0] || dataPocz[2] > dataKon[2] && dataPocz[1] == dataKon[1])
-                    dlugosc.text = "Koniec wyjazdu nie może być wcześniej niż początek"
-                else{
-                    val temp1 = (dataKon[0]*360) + (dataKon[1]*30) + dataKon[2]
-                    val temp2 = (dataPocz[0]*360) + (dataPocz[1]*30) + dataPocz[2]
-                    val temp = temp1.toChar() - temp2.toChar()
-                    dlugosc.text = "Wyjazd trwa "+temp.toString()+" dni"}
-        }
+    }
+    private fun ConvertDate(date: Long) :String{
+        val datetoconvert=Date(date)
+        val format=SimpleDateFormat(
+            "dd-MM-yyyy"
+        )
+        return format.format(datetoconvert)
     }
 }
